@@ -28,14 +28,14 @@ class Crawl:
         file = open(file_name, 'w')
         for item in  content_list:
             file.write(item.prettify())
-        file.close();
+        file.close()
 
     def parse_web_page(self, cont, from_encoding='utf-8'):
         return bs4.BeautifulSoup(cont, from_encoding='utf-8')
 
     def connect(self, c_host, c_user, c_passwd):
         if not self.__connect:
-            self.__connect = MySQLdb.connect(host=c_host, user=c_user, passwd=c_passwd);
+            self.__connect = MySQLdb.connect(host=c_host, user=c_user, passwd=c_passwd)
             return self.__connect
         else:
             return self.__connect
@@ -46,7 +46,7 @@ class Crawl:
     def save_to_db(self, data):
         self.output_log("---\tsave to db...")
         self.__connect.select_db('weixin')
-        cursor = self.__connect.cursor();
+        cursor = self.__connect.cursor()
         cursor.execute("select id from wow_items where id = %s", data['id'])
         tmpResult = cursor.fetchall()
 
@@ -121,8 +121,8 @@ class Crawl:
 
             return self.save_to_db(self.__data)
 
-crawl = Crawl();
-for num in range(1, 100000):
+crawl = Crawl()
+for num in range(1495, 100000):
     try :
         request_url = 'http://db.178.com/wow/cn/item/' + str(num) + '.html'
         crawl.crawl_item(url=request_url)
